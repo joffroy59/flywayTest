@@ -35,6 +35,8 @@
 					
 					<sqlMigrationPrefix>testSchema__</sqlMigrationPrefix>
 					
+					<encoding>UTF-8</encoding>
+					
                 </configuration>
                 <dependencies>
 					<dependency>
