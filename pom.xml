@@ -28,6 +28,8 @@
 						<location>filesystem:${basedir}/db/migration</location>
 					</locations>
 					
+					<sqlMigrationSeparator>__</sqlMigrationSeparator>
+					
                 </configuration>
                 <dependencies>
 					<dependency>
