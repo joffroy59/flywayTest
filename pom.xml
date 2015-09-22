@@ -33,6 +33,8 @@
 						<schema>testSchema</schema>
 					</schemas>
 					
+					<sqlMigrationPrefix>testSchema__</sqlMigrationPrefix>
+					
                 </configuration>
                 <dependencies>
 					<dependency>
