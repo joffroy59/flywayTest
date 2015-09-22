@@ -36,6 +36,7 @@
 					<sqlMigrationPrefix>testSchema__</sqlMigrationPrefix>
 					
 					<encoding>UTF-8</encoding>
+					<outOfOrder>true</outOfOrder>
 					
                 </configuration>
                 <dependencies>
