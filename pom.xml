@@ -38,6 +38,8 @@
 					<encoding>UTF-8</encoding>
 					<outOfOrder>true</outOfOrder>
 					
+					<baselineVersion>99.00</baselineVersion>
+					
                 </configuration>
                 <dependencies>
 					<dependency>
