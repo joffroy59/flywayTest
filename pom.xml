@@ -29,6 +29,9 @@
 					</locations>
 					
 					<sqlMigrationSeparator>__</sqlMigrationSeparator>
+					<schemas>
+						<schema>testSchema</schema>
+					</schemas>
 					
                 </configuration>
                 <dependencies>
