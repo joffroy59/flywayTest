@@ -45,16 +45,20 @@ function traceCmdVerbose {
 function usage {
 	traceCmd "DataBase Migration manaGer"
 	traceCmd
-	traceCmd "$CMD_NAME [-h] [-git [-r|--tagOK] <TAG>] <basename> [command] [options]"
+	traceCmd "$CMD_NAME [-h] [-g [-r|--tagOK] <TAG>] <basename> [command] [options]"
 	traceCmd "$CMD_NAME [options] "
 	traceCmd "  options : "
 	traceCmd "          -h            Show this help"
+	traceCmd "          -g <TAG>      Set git repository to tag <TAG>"
 	traceCmd
 }
 
 function parseArgs {
-	while getopts ":vh" opt; do
+	while getopts ":vhg:" opt; do
 	  case $opt in
+		g)
+		  echo "git was triggered! Parameter: $OPTARG"
+		  ;;
 		v)
 		  echo "-v was triggered!"
 		  ;;
@@ -66,6 +70,10 @@ function parseArgs {
 		  echo "Invalid option: -$OPTARG"
 		  exit 1
 		  ;;
+		:)
+		  echo "Option -$OPTARG requires an argument." >&2
+		  exit 1
+		  ;;		  
 	  esac
 	done
 	shift $((OPTIND-1))
