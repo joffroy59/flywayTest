@@ -45,15 +45,22 @@ function traceCmdVerbose {
 function usage {
 	traceCmd "DataBase Migration manaGer"
 	traceCmd
-	traceCmd "$CMD_NAME [-git [-r|--tagOK] <TAG>] <basename> [command] [options]"
-    traceCmd
+	traceCmd "$CMD_NAME [-h] [-git [-r|--tagOK] <TAG>] <basename> [command] [options]"
+	traceCmd "$CMD_NAME [options] "
+	traceCmd "  options : "
+	traceCmd "          -h            Show this help"
+	traceCmd
 }
 
 function parseArgs {
-	while getopts ":v" opt; do
+	while getopts ":vh" opt; do
 	  case $opt in
 		v)
 		  echo "-v was triggered!"
+		  ;;
+		h)
+		  usage
+		  exit 1
 		  ;;
 		\?)
 		  echo "Invalid option: -$OPTARG"
