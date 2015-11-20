@@ -46,7 +46,7 @@ function usage {
 	traceCmd "DataBase Migration manaGer"
 	traceCmd
 	traceCmd "$CMD_NAME [-h] [-g [-r|--tagOK] <TAG>] <conf_baseName> [command] [options]"
-	traceCmd "$CMD_NAME [options] <conf_baseName>"
+	traceCmd "$CMD_NAME [options] <conf_baseName> [flyway_command]"
 	traceCmd "  conf_baseName"
 	traceCmd "          DB name stored in ~/.db/repository/<conf_baseName>.conf"
 	traceCmd
@@ -95,6 +95,14 @@ function parseArgs {
 	shift
 	traceCmd "> conf_baseName=$conf_baseName"
 
+	# Flyway db command management
+	flyway_command="info"
+	if [[ $# != 0 ]] ; then
+		flyway_command=$1
+		shift
+	fi
+	traceCmd "> Applying <$flyway_command> flyway command"
+	
 }
 
 #######################
