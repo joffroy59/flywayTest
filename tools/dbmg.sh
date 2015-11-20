@@ -46,7 +46,7 @@ function usage {
 	traceCmd "DataBase Migration manaGer"
 	traceCmd
 	traceCmd "## USAGE ##"
-	traceCmd "$CMD_NAME [-git [-r|--tagOK] <TAG>] [-basefolder <basefolder>] <basename> [command] [options]"
+	traceCmd "$CMD_NAME [-git [-r|--tagOK] <TAG>] <basename> [command] [options]"
 	traceCmd
 	traceCmd "  -git [-r] <TAG>"
 	traceCmd "          if set, execute git command before start of flyway DB using git specified tag <TAG> (git fetch+checkout)"
@@ -232,9 +232,6 @@ hasToExecuteGitPreTreatment=false
 hasToExecuteGitPostTreatment=false
 hasToCreateTagOK=false
 
-haveBasefodlerSet=false
-dbScriptLocationRoot="${dbScriptLocation}/${version}"
-
 ## test git option in order to execute/not git command before start of flywaydb
 if [[ $1 == "-git" ]]; then
 	GIT_OPTIONS=$1
@@ -256,14 +253,6 @@ if [[ $1 == "-git" ]]; then
 fi
 
 ## test git option in order to execute/not git command before start of flywaydb
-if [[ $1 == "-basefolder" ]]; then
-	BF_OPTIONS=$1
-	shift	
-	BF_FOLDER=$1
-	BF_OPTIONS="$BF_OPTIONS $1"
-	shift
-	haveBasefodlerSet=true
-fi
 
 baseName=$1
 shift
@@ -290,13 +279,10 @@ fi
 
 stcom_version=$1
 shift
-if $haveBasefodlerSet ;then
-	dbScriptLocationRoot=$BF_FOLDER
-fi
 
-if [ ! -d ${dbScriptLocationRoot} ] ; then
+if [ ! -d ${dbScriptLocation}/${version} ] ; then
    traceCmd "> Error : Bad Syntax"
-   traceCmd "> Version $version has no dedicated dir ${dbScriptLocationRoot}"
+   traceCmd "> Version $version has no dedicated dir ${dbScriptLocation}/${version}"
    exit 1
 else
    traceCmd "> Apply version $version context"
@@ -368,7 +354,7 @@ traceCmd "> Running <$command> command on <$baseName> schema"
 # preprare flyway cmd
 #######################
 flywayCommand="flyway -configFile=flyway.conf -user=$user -password=$password -driver=$driver -schemas=$schemas -url=$url "
-flywayCommand="$flywayCommand -locations=filesystem:${dbScriptLocationRoot}"
+flywayCommand="$flywayCommand -locations=filesystem:${dbScriptLocation}/${version}"
 flywayCommand="$flywayCommand -sqlMigrationPrefix=$prefix"
 flywayCommand="$flywayCommand -outOfOrder=true"
 flywayCommand="$flywayCommand -placeholders.schema=$schemas"
