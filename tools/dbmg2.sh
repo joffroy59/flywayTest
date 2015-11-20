@@ -45,50 +45,7 @@ function traceCmdVerbose {
 function usage {
 	traceCmd "DataBase Migration manaGer"
 	traceCmd
-	traceCmd "## USAGE ##"
 	traceCmd "$CMD_NAME [-git [-r|--tagOK] <TAG>] <basename> [command] [options]"
-	traceCmd
-	traceCmd "  -git [-r] <TAG>"
-	traceCmd "          if set, execute git command before start of flyway DB using git specified tag <TAG> (git fetch+checkout)"
-	traceCmd "          -r : restore to 'master' branch after work"
-	traceCmd
-
-	traceCmd "  basename"
-	traceCmd "          DB name stored in ~/.db/repository/<basename>.conf"
-	traceCmd
-	traceCmd "          Must define variables user,password,url,driver,schema"
-	traceCmd "          Driver must be in default classpath"
-
-	traceCmd "          If begins with list/prefix, it will look for a .lst file in ~/repository/list"
-	traceCmd
-	traceCmd "  command"
-	traceCmd "          Flyway command among"
-	traceCmd "                  info (default)          Prints the details and status information about all the migrations"
-	traceCmd "                  validate                Validates the applied migrations against the available ones."
-	traceCmd "          > with interactive validation"
-	traceCmd "                  migrate                 Migrates the schema to the latest version. Flyway will create the metadata table automatically if it doesn't exist."
-	traceCmd "                  clean                   FORBIDDEN Drops all objects in the configured schemas."
-	traceCmd "                  baseline                Baselines an existing database, excluding all migrations upto and including baselineVersion."
-	traceCmd "                  repair                  Repairs the metadata table"
-	traceCmd "          @see flyway documentation more more details"
-
-	traceCmd
-	traceCmd "  ## Options ## "
-	traceCmd "          --help          Show this help"
-	traceCmd "          --version       Show script version"
-	traceCmd
-	traceCmd "      --target <version>   Define target version"
-	traceCmd
-	traceCmd "  --verbose"
-	traceCmd "  -v              Active Debug Mode"
-	traceCmd
-	traceCmd "  Based on FlyWay DB"
-	traceCmd "  @see http://flywaydb.org/"
-	traceCmd
-	traceCmd "  @since 2015"
-	traceCmd "  @copyright Decathlon"
-	traceCmd "  @author Damien Cuvillier <external.z01dcuvi@btwin.com> <damien@gotan.io>"
-	traceCmd "  @author Jerome OFFROY <external.z01dcuvi@btwin.com> <damien@gotan.io>"
     traceCmd
 }
 
