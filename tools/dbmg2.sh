@@ -45,8 +45,15 @@ function traceCmdVerbose {
 function usage {
 	traceCmd "DataBase Migration manaGer"
 	traceCmd
-	traceCmd "$CMD_NAME [-h] [-g [-r|--tagOK] <TAG>] <basename> [command] [options]"
-	traceCmd "$CMD_NAME [options] "
+	traceCmd "$CMD_NAME [-h] [-g [-r|--tagOK] <TAG>] <conf_baseName> [command] [options]"
+	traceCmd "$CMD_NAME [options] <conf_baseName>"
+	traceCmd "  conf_baseName"
+	traceCmd "          DB name stored in ~/.db/repository/<conf_baseName>.conf"
+	traceCmd
+	traceCmd "          Must define variables user,password,url,driver,schema"
+	traceCmd "          Driver must be in default classpath"
+	traceCmd "          If begins with list/prefix, it will look for a .lst file in ~/repository/list"
+	traceCmd
 	traceCmd "  options : "
 	traceCmd "          -h            Show this help"
 	traceCmd "          -g <TAG>      Set git repository to tag <TAG>"
@@ -82,6 +89,11 @@ function parseArgs {
 		usage
 		exit 2
 	fi
+
+	# parse parameter
+	conf_baseName=$1
+	shift
+	traceCmd "> conf_baseName=$conf_baseName"
 
 }
 
