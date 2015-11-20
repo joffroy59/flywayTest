@@ -393,7 +393,7 @@ fi
 gitInitWorkDir
 
 traceCmdVerbose "$flywayCommand"
-$flywayCommand
+echo "$flywayCommand"
 
 gitCreateGitTagOK 
 gitExecuteGitPostTreatment
