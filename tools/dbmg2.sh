@@ -185,33 +185,6 @@ parseArgs "$@"
 
 exit 5
 
-if [[ $# == 1 ]] && [[ $1 == "--version" ]] ; then
-        traceCmd "DataBase Migration manaGer"
-        traceCmd $mgdbVersion
-        exit 0
-fi
-
-if [[ $# == 1 ]] && [[ $1 == "--help" ]]; then
-		usage
-        exit 0;
-fi
-
-
-if [[ $# < 1 ]]; then
-        traceCmd "> No <basename> defined"
-		usage
-        traceCmd
-        exit 0
-fi
-
-#if [ ! -d ./$version ] ; then
-#       traceCmd "> Error : Bad Syntax"
-#       traceCmd "> Version $version has no dedicated dir"
-#       exit 1
-#else
-#       traceCmd "> Apply version $version context"
-#fi
-
 hasToExecuteGitPreTreatment=false
 hasToExecuteGitPostTreatment=false
 hasToCreateTagOK=false
@@ -320,10 +293,6 @@ while [[ $# > 0 ]] ; do
     fi
         shift
 done
-#######################
-# args parsing 
-#######################
-
 traceCmdVerbose ">   Driver :      $driver"
 traceCmdVerbose ">   URL :         $url"
 traceCmdVerbose ">   Schema :      $schemas"
