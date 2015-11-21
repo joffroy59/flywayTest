@@ -224,10 +224,24 @@ function checkMigration {
 	fi
 }
 
+function checkDbConf {
+	# Fichier de configuration de la base
+	confFileName="$HOME/.db/repository/$conf_baseName.conf"
+	traceDebug "[checkDbConf] $confFileName"
+	if [ ! -f $confFileName ] ; then
+			traceCmd "> Error : Bad Syntax"
+			traceCmd "> File $confFileName is not found"
+			exit 1
+	fi
+
+	traceDebug "[checkDbConf] source $confFileName"
+	. $confFileName
+
+}
+
 #######################
 # Function handler
 #######################
-
 
 traceDebug "@=$@"
 parseArgs "$@"
@@ -239,8 +253,10 @@ if [ "$conf_baseName" != "" ] ;then
 fi
 
 handlerLstMode "$@"
-
-checkMigration
+if ! $conf_isLstMode; then
+	checkMigration
+	checkDbConf
+fi
 
 traceDebug "END $@"
 exit 0
