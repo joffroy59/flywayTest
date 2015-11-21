@@ -229,4 +229,4 @@ fi
 handlerLstMode "$@"
 
 traceDebug "END $@"
-exit 5
+exit 0
