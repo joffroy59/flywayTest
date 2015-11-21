@@ -185,18 +185,6 @@ parseArgs "$@"
 
 exit 5
 
-stcom_version=$1
-shift
-
-if [ ! -d ${dbScriptLocation}/${version} ] ; then
-   traceCmd "> Error : Bad Syntax"
-   traceCmd "> Version $version has no dedicated dir ${dbScriptLocation}/${version}"
-   exit 1
-else
-   traceCmd "> Apply version $version context"
-fi
-
-
 # Fichier de configuration de la base
 confFileName="$HOME/.db/repository/$baseName.conf"
 if [ ! -f $confFileName ] ; then
