@@ -66,12 +66,13 @@ function usage {
 	traceCmd "          -t <version>  Define target version"
 	traceCmd "          -v            Verbose Mode"
 	traceCmd "          -s            Silent Mode"
+	traceCmd "          -d            Debug Mode"
 	traceCmd
 }
 
 function parseArgsOptions {
 	OPTIND=1
-	while getopts ":wxyzvshg:t:" opt; do
+	while getopts ":wxyzvsdhg:t:" opt; do
 	  case $opt in
 		t)
 		  echo "version : $OPTARG"
@@ -86,6 +87,10 @@ function parseArgsOptions {
 		s)
 		  traceCmdVerbose "-s was triggered!"
 		  silent=true
+		  ;;
+		d)
+		  traceCmdVerbose "-d was triggered!"
+		  debug=true
 		  ;;
 		w)
 		  traceCmdVerbose "-w was triggered!"
@@ -250,6 +255,8 @@ function gitExecuteGitPostTreatment {
 #######################
 
 verbose=false
+debug=false
+silent=false
 #######################
 # args parsing 
 #######################
