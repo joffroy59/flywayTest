@@ -162,10 +162,19 @@ function parseArgs {
 	
 }
 
+function parseLstConfig {
+	traceDebug "conf_baseName=$conf_baseName"
+	if [[ ${conf_baseName:(-3)} == "lst" ]]; then
+			conf_isLstMode=true
+	fi
+	
+}
+
 verbose=false
 debug=false
 silent=false
 
+conf_isLstMode=false
 
 #######################
 # args parsing 
@@ -177,7 +186,7 @@ parseArgs "$@"
 traceDebug "@=$@"
 
 if [ "$conf_baseName" != "" ] ;then
-	traceDebug "conf_baseName=$conf_baseName"
+	parseLstConfig "$conf_baseName"
 	traceCmd "> conf_baseName=$conf_baseName"
 fi
 
