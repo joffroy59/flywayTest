@@ -185,29 +185,6 @@ parseArgs "$@"
 
 exit 5
 
-baseName=$1
-shift
-if [[ ${baseName:(-3)} == "lst" ]]; then
-        traceCmd "> Multiple configurations mode"
-        listFilename="$envConfigLocation/$baseName"
-		gitInitWorkDir
-        if [ ! -f $listFilename ]; then
-                traceCmd "> Bad Syntax"
-                traceCmd "> List Filename $listFilename is not found"
-                exit 1
-        else
-                for uniqueFile in `cat $listFilename`; do
-                        traceCmd $uniqueFile
-                        cd `pwd`
-                        $CMD_NAME $GIT_OPTIONS $BF_OPTIONS $uniqueFile $*
-                done
-        fi
-        if $hasToCreateTagOK ;then
-            createGitTagOK $git_tag
-        fi
-        exit 0
-fi
-
 stcom_version=$1
 shift
 
