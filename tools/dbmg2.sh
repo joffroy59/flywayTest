@@ -62,7 +62,7 @@ function usage {
 }
 
 function parseArgsOptions {
-	while getopts ":wxvhg:t:" opt; do
+	while getopts ":wxyvhg:t:" opt; do
 	  case $opt in
 		t)
 		  echo "version : $OPTARG"
@@ -78,6 +78,9 @@ function parseArgsOptions {
 		  ;;
 		x)
 		  echo "-x was triggered!"
+		  ;;
+		y)
+		  echo "-y was triggered!"
 		  ;;
 		h)
 		  usage
