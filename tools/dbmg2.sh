@@ -28,12 +28,18 @@ CMD_PREFIX="[$CMD_NAME]"
 GIT_MASTER_BRANCH=master
 GIT_PREFIX="[GIT]"
 
+function trace {
+	if ! $silent ; then
+		echo "$@"
+	fi
+}
+
 function traceGit {
-	echo "$GIT_PREFIX $@"
+	trace "$GIT_PREFIX $@"
 }
 
 function traceCmd {
-	echo "$CMD_PREFIX $@"
+	trace "$CMD_PREFIX $@"
 }
 
 function traceCmdVerbose {
@@ -93,11 +99,11 @@ function parseArgsOptions {
 		  exit 1
 		  ;;
 		\?)
-		  echo "Invalid option: -$OPTARG"
+		  trace "Invalid option: -$OPTARG"
 		  exit 1
 		  ;;
 		:)
-		  echo "Option -$OPTARG requires an argument." >&2
+		  trace "Option -$OPTARG requires an argument." >&2
 		  exit 1
 		  ;;		  
 	  esac
