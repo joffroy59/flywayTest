@@ -148,7 +148,6 @@ function parseArgs {
 	# parse parameter
 	conf_baseName=$1
 	shift
-	traceCmd "> conf_baseName=$conf_baseName"
 
 	parseArgsOptions "$@"
 	shift $((OPTIND-1))
@@ -179,6 +178,7 @@ traceDebug "@=$@"
 
 if [ "$conf_baseName" != "" ] ;then
 	traceDebug "conf_baseName=$conf_baseName"
+	traceCmd "> conf_baseName=$conf_baseName"
 fi
 
 exit 5
