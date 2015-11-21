@@ -163,115 +163,11 @@ function parseArgs {
 	
 }
 
-#######################
-# GIT function
-#######################
-GIT_ORIGINAL_BRANCH=
-GIT_OPTIONS=
-BF_OPTIONS=
-
-function gitMoveToBranch {
-	git_tag=$1
-	
-	traceGit "Git Operation enable"
-	if [[ "$git_tag" == "" ]]; then
-		traceGit "No tag specified"
-		usage
-		exit 1;
-	fi
-	
-	## update all tag from remote
-	git fetch --tags
-	
-	if [[ ! $(git rev-list $git_tag 2>/dev/null) ]]; then
-		traceGit "The tag $git_tag does not exists in git repository"
-		exit 1;
-	fi
-	
-	gitCheckout $git_tag
-	if [[ $? -eq 0 ]]; then 
-		traceGit "set git workspace to tag : $git_tag  [OK]"
-	else
-		traceGit "set git workspace to tag : $git_tag  [KO]"
-		exit 2
-	fi
-}
-
-function gitShowCurrentBranch {
-	traceGit "current branch : $(git rev-parse --abbrev-ref HEAD)"
-}
-
-function gitBackupWorkingCopy {
-	git stash
-	traceGit "Your working directory Changes was Stash"
-}
-
-function gitCheckStatus {
-	if ! git diff-index --quiet HEAD --; then
-		traceGit "Your working directory is not clean"
-		gitBackupWorkingCopy
-	fi
-}
-
-function gitCheckout {
-	GIT_CHECKOUT_OPTRIONS=""
-	if ! $verbose ; then
-		GIT_CHECKOUT_OPTRIONS="--quiet"
-	fi
-	git checkout $GIT_CHECKOUT_OPTRIONS $1
-}
-
-function executeGitPreTreatment {
-	GIT_BRANCH=$1
-	gitCheckStatus
-	gitMoveToBranch $GIT_BRANCH
-	gitShowCurrentBranch
-}
-
-function executeGitPostTreatment {
-	GIT_BRANCH=$1
-	traceGit "Git Operation restore enable [restore original branch : $GIT_BRANCH]"
-	gitCheckout $GIT_BRANCH
-	if [[ $? -eq 0 ]]; then 
-		traceGit "set git workspace to branch : $GIT_BRANCH  [OK]"
-	else
-		traceGit "set git workspace to branch : $GIT_BRANCH  [KO]"
-		exit 2
-	fi
-	gitShowCurrentBranch
-}
-
-function createGitTagOK {
-	TAG_ORIGINAL=$1
-	traceGit "Command to push TAG OK:"
-	traceGit "git tag ${TAG_ORIGINAL}_PP_OK ; git push --tags"
-}
-
-function gitInitWorkDir {
-	if $hasToExecuteGitPreTreatment ; then
-		executeGitPreTreatment $git_tag
-	fi
-}
-
-function gitCreateGitTagOK {
-	if $hasToCreateTagOK ;then
-		createGitTagOK $git_tag
-	fi
-}
-
-function gitExecuteGitPostTreatment {
-	if $hasToExecuteGitPostTreatment ; then
-		executeGitPostTreatment $GIT_ORIGINAL_BRANCH
-	fi
-}
-
-#######################
-# GIT function
-#######################
-
 verbose=false
 debug=false
 silent=false
+
+
 #######################
 # args parsing 
 #######################
