@@ -65,12 +65,13 @@ function usage {
 	traceCmd "          -g <TAG>      Set git repository to tag <TAG>"
 	traceCmd "          -t <version>  Define target version"
 	traceCmd "          -v            Verbose Mode"
+	traceCmd "          -s            Silent Mode"
 	traceCmd
 }
 
 function parseArgsOptions {
 	OPTIND=1
-	while getopts ":wxyzvhg:t:" opt; do
+	while getopts ":wxyzvshg:t:" opt; do
 	  case $opt in
 		t)
 		  echo "version : $OPTARG"
@@ -81,6 +82,10 @@ function parseArgsOptions {
 		v)
 		  traceCmdVerbose "-v was triggered!"
 		  verbose=true
+		  ;;
+		s)
+		  traceCmdVerbose "-s was triggered!"
+		  silent=true
 		  ;;
 		w)
 		  traceCmdVerbose "-w was triggered!"
