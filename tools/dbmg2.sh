@@ -266,6 +266,16 @@ function checkFlywayDBCommand {
 	fi
 }
 
+function traceInfo {
+	traceCmdVerbose ">   Driver :      $driver"
+	traceCmdVerbose ">   URL :         $url"
+	traceCmdVerbose ">   Schema :      $schemas"
+	traceCmdVerbose ">   File Prefix : $prefix"
+	traceCmdVerbose ">   User :        $user"
+	traceCmdVerbose ">   Password :    (hidden)"
+
+	traceCmd "> Running <$flyway_command> command on <$conf_baseName> schema"
+}
 
 #######################
 # Function handler
@@ -285,7 +295,10 @@ if ! $conf_isLstMode; then
 	checkMigration
 	checkDbConf
 	checkFlywayDBCommand
+
+	traceInfo
 fi
+
 
 traceDebug "END $@"
 exit 0
