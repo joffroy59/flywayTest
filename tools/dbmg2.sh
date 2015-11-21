@@ -98,18 +98,6 @@ function parseArgsOptions {
 		g)
 		  traceDebug "git was triggered! Parameter: $OPTARG"
 		  ;;
-		w)
-		  traceDebug "-w was triggered!"
-		  ;;
-		x)
-		  traceDebug "-x was triggered!"
-		  ;;
-		y)
-		  traceDebug "-y was triggered!"
-		  ;;
-		z)
-		  traceDebug "-z was triggered!"
-		  ;;
 		h)
 		  usage
 		  exit 1
@@ -187,7 +175,7 @@ debug=false
 silent=false
 
 conf_isLstMode=false
-
+#version="latest"
 #######################
 # args parsing 
 #######################
@@ -277,6 +265,25 @@ function traceInfo {
 	traceCmd "> Running <$flyway_command> command on <$conf_baseName> schema"
 }
 
+function createFlywayFullCommand {
+	flywayCommand="flyway -configFile=flyway.conf -user=$user -password=$password -driver=$driver -schemas=$schemas -url=$url "
+	flywayCommand="$flywayCommand -locations=filesystem:${dbScriptLocation}/${version}"
+	flywayCommand="$flywayCommand -sqlMigrationPrefix=$prefix"
+	flywayCommand="$flywayCommand -outOfOrder=true"
+	flywayCommand="$flywayCommand -placeholders.schema=$schemas"
+	flywayCommand="$flywayCommand $command"
+
+#	if [[ $version != "latest" ]] ; then
+#		flywayCommand="$flywayCommand -target=$version"
+#	fi
+
+	if $verbose ; then
+		flywayCommand="$flywayCommand -X"
+	fi
+
+	traceDebug "flywayCommand=$flywayCommand"
+}
+
 #######################
 # Function handler
 #######################
@@ -297,6 +304,7 @@ if ! $conf_isLstMode; then
 	checkFlywayDBCommand
 
 	traceInfo
+	createFlywayFullCommand
 fi
 
 
