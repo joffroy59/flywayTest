@@ -66,6 +66,17 @@ function usage {
 	traceCmd "          Driver must be in default classpath"
 	traceCmd "          If begins with list/prefix, it will look for a .lst file in ~/repository/list"
 	traceCmd
+	traceCmd "  command"
+	traceCmd "          Flyway command :"
+	traceCmd "                  info (default)          Prints the details and status information about all the migrations"
+	traceCmd "                  validate                Validates the applied migrations against the available ones."
+	traceCmd "          			> with interactive validation"
+	traceCmd "                  migrate                 Migrates the schema to the latest version. Flyway will create the metadata table automatically if it doesn't exist."
+	traceCmd "                  clean                   FORBIDDEN Drops all objects in the configured schemas."
+	traceCmd "                  baseline                Baselines an existing database, excluding all migrations upto and including baselineVersion."
+	traceCmd "                  repair                  Repairs the metadata table"
+	traceCmd "          @see flyway documentation more more details"
+	traceCmd
 	traceCmd "  options : "
 	traceCmd "          -h            Show this help"
 	traceCmd "          -g <TAG>      Set git repository to tag <TAG>"
@@ -236,8 +247,25 @@ function checkDbConf {
 
 	traceDebug "[checkDbConf] source $confFileName"
 	. $confFileName
-
 }
+
+function checkFlywayDBCommand {
+	traceDebug "[checkFlywayDBCommand] $flyway_command"
+	if [[ $flyway_command == "clean" ]] || [[ $flyway_command == "CLEAN" ]] ; then
+		traceCmd "> FORBIDDEN COMMAND $flyway_command Drops all objects in the configured schemas."
+		exit 1 
+	fi
+
+	traceDebug "[checkFlywayDBCommand] allowedCommands=${allowedCommands[*]}"
+	if ! [[ " ${allowedCommands[*]} " == *" $flyway_command "* ]] ; then
+			traceCmd "> Error : Bad Syntax"
+			traceCmd "> <$flyway_command> command does not exist"
+			traceCmd "allowedCommands=(${allowedCommands[*]})"
+			traceCmd "> Type $CMD_NAME --help for more info"
+			exit 1
+	fi
+}
+
 
 #######################
 # Function handler
@@ -256,6 +284,7 @@ handlerLstMode "$@"
 if ! $conf_isLstMode; then
 	checkMigration
 	checkDbConf
+	checkFlywayDBCommand
 fi
 
 traceDebug "END $@"
