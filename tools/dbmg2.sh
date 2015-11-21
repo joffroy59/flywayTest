@@ -34,6 +34,12 @@ function trace {
 	fi
 }
 
+function traceDebug {
+	if $debug ; then
+		traceCmd "[DEBUG] $@"
+	fi
+}
+
 function traceGit {
 	trace "$GIT_PREFIX $@"
 }
@@ -75,10 +81,10 @@ function parseArgsOptions {
 	while getopts ":wxyzvsdhg:t:" opt; do
 	  case $opt in
 		t)
-		  echo "version : $OPTARG"
+		  traceDebug "version : $OPTARG"
 		  ;;
 		g)
-		  echo "git was triggered! Parameter: $OPTARG"
+		  traceDebug "git was triggered! Parameter: $OPTARG"
 		  ;;
 		v)
 		  traceCmdVerbose "-v was triggered!"
@@ -261,7 +267,10 @@ silent=false
 # args parsing 
 #######################
 
+
+traceDebug "@=$@"
 parseArgs "$@"
+traceDebug "@=$@"
 
 exit 5
 
@@ -443,7 +452,7 @@ fi
 gitInitWorkDir
 
 traceCmdVerbose "$flywayCommand"
-echo "$flywayCommand"
+traceDebug "$flywayCommand"
 
 gitCreateGitTagOK 
 gitExecuteGitPostTreatment
