@@ -177,4 +177,8 @@ traceDebug "@=$@"
 parseArgs "$@"
 traceDebug "@=$@"
 
+if [ "$conf_baseName" != "" ] ;then
+	traceDebug "conf_baseName=$conf_baseName"
+fi
+
 exit 5
