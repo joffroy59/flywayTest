@@ -87,16 +87,16 @@ function parseArgsOptions {
 		  traceDebug "git was triggered! Parameter: $OPTARG"
 		  ;;
 		w)
-		  traceCmdVerbose "-w was triggered!"
+		  traceDebug "-w was triggered!"
 		  ;;
 		x)
-		  traceCmdVerbose "-x was triggered!"
+		  traceDebug "-x was triggered!"
 		  ;;
 		y)
-		  traceCmdVerbose "-y was triggered!"
+		  traceDebug "-y was triggered!"
 		  ;;
 		z)
-		  traceCmdVerbose "-z was triggered!"
+		  traceDebug "-z was triggered!"
 		  ;;
 		h)
 		  usage
@@ -119,16 +119,16 @@ function parseArgsOptionsVerbose {
 	while getopts ":vsd" opt; do
 	  case $opt in
 		v)
-		  traceCmdVerbose "-v was triggered!"
+		  traceDebug "-v was triggered!"
 		  verbose=true
 		  ;;
 		s)
-		  traceCmdVerbose "-s was triggered!"
+		  traceDebug "-s was triggered!"
 		  silent=true
 		  ;;
 		d)
-		  traceCmdVerbose "-d was triggered!"
 		  debug=true
+		  traceDebug "-d was triggered!"
 		  ;;
 	  esac
 	done
