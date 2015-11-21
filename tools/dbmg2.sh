@@ -58,6 +58,7 @@ function usage {
 	traceCmd "          -h            Show this help"
 	traceCmd "          -g <TAG>      Set git repository to tag <TAG>"
 	traceCmd "          -t <version>  Define target version"
+	traceCmd "          -v            Verbose Mode"
 	traceCmd
 }
 
@@ -72,19 +73,20 @@ function parseArgsOptions {
 		  echo "git was triggered! Parameter: $OPTARG"
 		  ;;
 		v)
-		  echo "-v was triggered!"
+		  traceCmdVerbose "-v was triggered!"
+		  verbose=true
 		  ;;
 		w)
-		  echo "-w was triggered!"
+		  traceCmdVerbose "-w was triggered!"
 		  ;;
 		x)
-		  echo "-x was triggered!"
+		  traceCmdVerbose "-x was triggered!"
 		  ;;
 		y)
-		  echo "-y was triggered!"
+		  traceCmdVerbose "-y was triggered!"
 		  ;;
 		z)
-		  echo "-z was triggered!"
+		  traceCmdVerbose "-z was triggered!"
 		  ;;
 		h)
 		  usage
@@ -236,7 +238,7 @@ function gitExecuteGitPostTreatment {
 # GIT function
 #######################
 
-
+verbose=false
 #######################
 # args parsing 
 #######################
