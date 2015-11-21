@@ -57,12 +57,16 @@ function usage {
 	traceCmd "  options : "
 	traceCmd "          -h            Show this help"
 	traceCmd "          -g <TAG>      Set git repository to tag <TAG>"
+	traceCmd "          -t <version>  Define target version"
 	traceCmd
 }
 
 function parseArgsOptions {
-	while getopts ":vhg:" opt; do
+	while getopts ":vhg:t:" opt; do
 	  case $opt in
+		t)
+		  echo "version : $OPTARG"
+		  ;;
 		g)
 		  echo "git was triggered! Parameter: $OPTARG"
 		  ;;
@@ -99,6 +103,9 @@ function parseArgs {
 	conf_baseName=$1
 	shift
 	traceCmd "> conf_baseName=$conf_baseName"
+
+	parseArgsOptions "$@"
+	shift $((OPTIND-1))
 
 	# Flyway db command management
 	flyway_command="info"
