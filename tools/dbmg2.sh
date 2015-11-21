@@ -180,6 +180,42 @@ conf_isLstMode=false
 # args parsing 
 #######################
 
+#######################
+# Function handler
+#######################
+
+function handlerLstMode {
+	if $conf_isLstMode; then
+        traceCmd "> Multiple configurations mode"
+        listFilename="$envConfigLocation/$conf_baseName"
+		echo TODO gitInitWorkDir here or not ??
+		RES=0
+        if [ ! -f $listFilename ]; then
+                traceCmd "> Bad Syntax"
+                traceCmd "> List Filename $listFilename is not found"
+                exit 1
+        else
+                for uniqueFile in `cat $listFilename`; do
+                        traceCmd $uniqueFile
+                        cd `pwd` ## TODO WY this ???
+						CMD_OPTION=`echo "$*" | sed 's/'$conf_baseName'/'${uniqueFile}'/g'`
+                        ./$CMD_NAME $CMD_OPTION
+						RES=$?
+						if [[ $RES != 0 ]];then
+							exit $RES
+						fi
+                done
+        fi
+        # if $hasToCreateTagOK ;then
+            # createGitTagOK $git_tag
+        # fi
+	fi
+}
+
+#######################
+# Function handler
+#######################
+
 
 traceDebug "@=$@"
 parseArgs "$@"
@@ -190,4 +226,7 @@ if [ "$conf_baseName" != "" ] ;then
 	traceCmd "> conf_baseName=$conf_baseName"
 fi
 
+handlerLstMode "$@"
+
+traceDebug "END $@"
 exit 5
