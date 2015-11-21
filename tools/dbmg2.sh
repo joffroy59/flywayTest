@@ -185,16 +185,6 @@ parseArgs "$@"
 
 exit 5
 
-# Fichier de configuration de la base
-confFileName="$HOME/.db/repository/$baseName.conf"
-if [ ! -f $confFileName ] ; then
-        traceCmd "> Error : Bad Syntax"
-        traceCmd "> File $confFileName is not found"
-        exit 1
-fi
-
-. $confFileName
-
 # Gestion des commandes
 if [[ $# == 0 ]] ; then
         traceCmd "> Applying <info> default flyway command"
