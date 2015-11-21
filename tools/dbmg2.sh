@@ -60,7 +60,7 @@ function usage {
 	traceCmd
 }
 
-function parseArgs {
+function parseArgsOptions {
 	while getopts ":vhg:" opt; do
 	  case $opt in
 		g)
@@ -83,6 +83,11 @@ function parseArgs {
 		  ;;		  
 	  esac
 	done
+}
+
+function parseArgs {
+
+	parseArgsOptions "$@"
 	shift $((OPTIND-1))
 	
 	if (($# == 0)); then
