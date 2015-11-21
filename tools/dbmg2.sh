@@ -185,32 +185,6 @@ parseArgs "$@"
 
 exit 5
 
-hasToExecuteGitPreTreatment=false
-hasToExecuteGitPostTreatment=false
-hasToCreateTagOK=false
-
-## test git option in order to execute/not git command before start of flywaydb
-if [[ $1 == "-git" ]]; then
-	GIT_OPTIONS=$1
-	shift
-	if [[ $# -gt 1 ]] && [[ $1 == "-r" ]] ; then
-			hasToExecuteGitPostTreatment=true
-			GIT_ORIGINAL_BRANCH=$GIT_MASTER_BRANCH
-			GIT_OPTIONS="$GIT_OPTIONS $1"
-			shift
-	fi	
-	if [[ $# -gt 1 ]] && [[ $1 == "--tagOK" ]] ; then
-			hasToCreateTagOK=true
-			shift
-	fi	
-	git_tag=$1
-	GIT_OPTIONS="$GIT_OPTIONS $1"
-	shift
-	hasToExecuteGitPreTreatment=true
-fi
-
-## test git option in order to execute/not git command before start of flywaydb
-
 baseName=$1
 shift
 if [[ ${baseName:(-3)} == "lst" ]]; then
