@@ -82,6 +82,7 @@ function parseArgsOptions {
 	  case $opt in
 		t)
 		  traceDebug "version : $OPTARG"
+		  version=$OPTARG
 		  ;;
 		g)
 		  traceDebug "git was triggered! Parameter: $OPTARG"
@@ -212,6 +213,17 @@ function handlerLstMode {
 	fi
 }
 
+function checkMigration {
+	traceDebug "[checkMigration] dbScriptLocation/version=${dbScriptLocation}/${version}"
+	if [ ! -d ${dbScriptLocation}/${version} ] ; then
+	   traceCmd "> Error : Bad Syntax"
+	   traceCmd "> Version $version has no dedicated dir ${dbScriptLocation}/${version}"
+	   exit 1
+	else
+	   traceCmd "> Apply version $version context"
+	fi
+}
+
 #######################
 # Function handler
 #######################
@@ -227,6 +239,8 @@ if [ "$conf_baseName" != "" ] ;then
 fi
 
 handlerLstMode "$@"
+
+checkMigration
 
 traceDebug "END $@"
 exit 0
