@@ -185,29 +185,6 @@ parseArgs "$@"
 
 exit 5
 
-# Gestion des commandes
-if [[ $# == 0 ]] ; then
-        traceCmd "> Applying <info> default flyway command"
-        command="info"
-else
-        command=$1
-fi
-shift
-
-
-if [[ $command == "clean" ]] || [[ $command == "CLEAN" ]] ; then
-    traceCmd "> FORBIDDEN COMMAND Drops all objects in the configured schemas."
-    exit 1 
-fi
-
-
-if ! [[ " ${allowedCommands[*]} " == *" $command "* ]] ; then
-        traceCmd "> Error : Bad Syntax"
-        traceCmd "> <$command> command does not exist"
-        traceCmd "> Type $CMD_NAME --help for more info"
-        exit 1
-fi
-
 verbose=false
 version="latest"
 while [[ $# > 0 ]] ; do
