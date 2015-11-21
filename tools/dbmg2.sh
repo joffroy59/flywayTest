@@ -185,20 +185,6 @@ parseArgs "$@"
 
 exit 5
 
-verbose=false
-version="latest"
-while [[ $# > 0 ]] ; do
-        if [[ $1 == "--verbose" ]] || [[ $1 == "-v" ]] ; then
-                verbose=true
-                traceCmd "> Verbose Mode active"
-        fi
-    if [[ $1 == "--target" ]] ; then
-        shift
-        version=$1
-        traceCmd "> Max version $version"
-    fi
-        shift
-done
 traceCmdVerbose ">   Driver :      $driver"
 traceCmdVerbose ">   URL :         $url"
 traceCmdVerbose ">   Schema :      $schemas"
