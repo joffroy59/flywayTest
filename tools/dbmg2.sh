@@ -62,6 +62,7 @@ function usage {
 }
 
 function parseArgsOptions {
+	OPTIND=1
 	while getopts ":wxyzvhg:t:" opt; do
 	  case $opt in
 		t)
